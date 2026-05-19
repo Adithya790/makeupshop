@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Makeup Store{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Top Offer Bar -->
+    <div class="top-bar">
+        ✨ Flat 20% Off on All Beauty Products | Free Shipping Above ₹999
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="nav-bar">
+
+                <!-- Logo -->
+                <a href="{% url 'product_list' %}" class="logo">
+                    💄 Makeup<span>Store</span>
+                </a>
+
+                <!-- Navigation -->
+                {% include 'includes/navbar.html' %}
+
+                <!-- Search -->
+                <form method="get" action="{% url 'product_list' %}" class="search-box">
+                    <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}">
+                    <button type="submit">🔍</button>
+                </form>
+
+                <!-- Header Actions -->
+                <div class="header-actions">
+                    <a href="#">Account</a>
+                    <a href="{% url 'wishlist_detail' %}">Wishlist ❤️</a>
+                    <a href="{% url 'cart_detail' %}">Cart</a>
+                </div>
+
+            </div>
+        </div>
+
+       <div class="category-navbar">
+    <div class="container">
+        <ul class="category-menu">
+            <!-- ALL Items Link -->
+            <li class="all-item">
+                <a href="{% url 'product_list' %}">ALL</a>
+            </li>
+
+            <!-- Loop through Parent Categories -->
+            {% for category in categories %}
+            <li class="nav-item">
+                <!-- Parent link: Hovering over this (and its container) opens the menu -->
+                <a href="{% url 'products_by_category' category.slug %}" class="nav-link">
+                    {{ category.name }}
+                </a>
+
+                 <!-- Submenu Container -->
+                <!-- <ul class="submenu">
+                    <li>
+                        <a href="{% url 'products_by_category' category.slug %}" class="view-all-sub">
+                            View All {{ category.name }}
+                        </a>
+                    </li> -->
+                    
+                    <!-- {% for sub in category.subcategories.all %}
+                    <li>
+                        <a href="{% url 'products_by_category' sub.slug %}">
+                            {{ sub.name }}
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li class="no-sub">No subcategories</li>
+                    {% endfor %}
+                </ul> -->
+             </li>
+            {% empty %}
+            <li>No categories found.</li>
+            {% endfor %} 
+        </ul>
+    </div>
+</div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Makeup Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+   
+
+</body>
+</html>
