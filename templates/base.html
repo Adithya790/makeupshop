@@ -13,31 +13,29 @@
 
 <body>
 
-    <!-- Top Offer Bar -->
     <div class="top-bar">
         ✨ Flat 20% Off on All Beauty Products | Free Shipping Above ₹999
     </div>
 
-    <!-- Header -->
+
     <header class="site-header">
         <div class="container">
             <div class="nav-bar">
 
-                <!-- Logo -->
+                
                 <a href="{% url 'product_list' %}" class="logo">
                     💄 Makeup<span>Store</span>
                 </a>
 
-                <!-- Navigation -->
+              
                 {% include 'includes/navbar.html' %}
 
-                <!-- Search -->
+        
                 <form method="get" action="{% url 'product_list' %}" class="search-box">
                     <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}">
                     <button type="submit">🔍</button>
                 </form>
 
-                <!-- Header Actions -->
                 <div class="header-actions">
                     <a href="#">Account</a>
                     <a href="{% url 'wishlist_detail' %}">Wishlist ❤️</a>
@@ -50,20 +48,20 @@
        <div class="category-navbar">
     <div class="container">
         <ul class="category-menu">
-            <!-- ALL Items Link -->
+           
             <li class="all-item">
                 <a href="{% url 'product_list' %}">ALL</a>
             </li>
 
-            <!-- Loop through Parent Categories -->
+            
             {% for category in categories %}
             <li class="nav-item">
-                <!-- Parent link: Hovering over this (and its container) opens the menu -->
+                
                 <a href="{% url 'products_by_category' category.slug %}" class="nav-link">
                     {{ category.name }}
                 </a>
 
-                 <!-- Submenu Container -->
+                
                 <!-- <ul class="submenu">
                     <li>
                         <a href="{% url 'products_by_category' category.slug %}" class="view-all-sub">
@@ -90,13 +88,13 @@
 </div>
     </header>
 
-    <!-- Main Content -->
+   
     <main class="container main-content">
         {% block content %}
         {% endblock %}
     </main>
 
-    <!-- Footer -->
+    
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2026 Makeup Store. All rights reserved.</p>
