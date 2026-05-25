@@ -1,70 +1,371 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
+
     {% if selected_category %}
         {{ selected_category.name }}
     {% else %}
         All Products
     {% endif %}
+
 {% endblock %}
+
+
 
 {% block content %}
 
+<!-- ================= HERO / CATEGORY SHOWCASE ================= -->
 
-<section class="hero-banner">
-    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=80"
-         alt="Beauty Banner">
-    <div class="hero-overlay">
-        <h1>Discover Your Beauty</h1>
-        <p>Premium makeup, skincare and cosmetics.</p>
+{% if selected_category %}
+
+<section class="category-showcase">
+
+    <!-- LEFT SIDE -->
+
+    <div class="showcase-left">
+
+        <h4>Discover</h4>
+
+        <h1>
+
+            Best {{ selected_category.name }} Makeup
+
+        </h1>
+
+        <p>
+
+            Explore high-performing
+            {{ selected_category.name }}
+            products for your vanity
+
+        </p>
+
     </div>
+
+
+    <!-- RIGHT SIDE IMAGES -->
+
+    <div class="showcase-right">
+
+        {% for banner in banners|slice:":2" %}
+
+        <div class="showcase-image">
+
+            <img src="{{ banner.image.url }}"
+                 alt="{{ selected_category.name }}">
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
 </section>
 
+{% else %}
+
+<!-- ================= HOME HERO SLIDER ================= -->
+
+<section class="hero-banner">
+
+    <div class="slide active">
+
+        <img src="{% static 'images/hero1.jpg' %}" alt="">
+
+    </div>
+
+    <div class="slide">
+
+        <img src="{% static 'images/hero2.jpg' %}" alt="">
+
+    </div>
+
+    <div class="slide">
+
+        <img src="{% static 'images/hero3.jpg' %}" alt="">
+
+    </div>
+
+    <div class="hero-overlay">
+
+        <h1>
+
+            Glow With Confidence
+
+        </h1>
+
+        <p>
+
+            Luxury beauty products for your perfect glow ✨
+
+        </p>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+
+<!-- ================= PAGE TITLE ================= -->
 
 <div class="section-header">
+
     <h2>
+
         {% if selected_category %}
             {{ selected_category.name }}
         {% else %}
             Trending Beauty Products
         {% endif %}
+
     </h2>
+
 </div>
 
 
-<div class="product-grid">
-    {% for product in products %}
+
+<!-- ================= TOP CATEGORIES ================= -->
+
+{% if not selected_category %}
+
+<section class="top-categories">
+
+    <div class="section-header">
+
+        <h2>
+
+            Top Categories
+
+        </h2>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        {% for category in categories %}
+
+        <a href="{% url 'products_by_category' category.slug %}"
+           class="category-card">
+
+            {% if category.image %}
+
+            <img src="{{ category.image.url }}"
+                 alt="{{ category.name }}">
+
+            {% endif %}
+
+            <p>
+
+                {{ category.name }}
+
+            </p>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+
+<!-- ================= SUBCATEGORIES ================= -->
+
+{% if selected_category and subcategories %}
+
+<section class="subcategories-section">
+
+    <div class="section-header">
+
+        <h2>
+
+            {{ selected_category.name }} Categories
+
+        </h2>
+
+    </div>
+
+
+    <div class="subcategory-grid">
+
+        {% for sub in subcategories %}
+
+        <a href="{% url 'products_by_category' sub.slug %}"
+           class="subcategory-card">
+
+            {% if sub.image %}
+
+            <img src="{{ sub.image.url }}"
+                 alt="{{ sub.name }}"
+                 class="subcategory-img">
+
+            {% endif %}
+
+            <h3>
+
+                {{ sub.name }}
+
+            </h3>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<section class="products-section" id="products">
+
+    <div class="product-grid">
+
+        {% for product in products %}
+
         <div class="product-card">
+
+            <!-- PRODUCT IMAGE -->
+
             <a href="{% url 'product_detail' product.slug %}">
+
                 {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+
+                <img src="{{ product.image.url }}"
+                     alt="{{ product.name }}">
+
                 {% else %}
-                    <img src="https://via.placeholder.com/400x400?text=No+Image"
-                         alt="{{ product.name }}">
+
+                <img src="https://via.placeholder.com/400x400?text=No+Image"
+                     alt="{{ product.name }}">
+
                 {% endif %}
+
             </a>
 
+
+            <!-- PRODUCT INFO -->
+
             <div class="product-info">
+
+                <div class="rating">
+
+                    ⭐⭐⭐⭐⭐
+
+                </div>
+
+
                 {% if product.brand %}
-                    <p class="product-brand">{{ product.brand }}</p>
+
+                <p class="product-brand">
+
+                    {{ product.brand }}
+
+                </p>
+
                 {% endif %}
 
+
                 <h3>
+
                     <a href="{% url 'product_detail' product.slug %}">
+
                         {{ product.name }}
+
                     </a>
+
                 </h3>
 
-                <p class="product-price">₹{{ product.price }}</p>
 
-  <a href="{% url 'product_detail' product.slug %}" class="view-details-btn">
-    View Details
-</a>
+                <p class="product-price">
+
+                    ₹{{ product.price }}
+
+                </p>
+
+
+                <!-- BUTTONS -->
+
+                <div class="product-buttons">
+
+                    <a href="{% url 'product_detail' product.slug %}"
+                       class="view-details-btn">
+
+                        View Details
+
+                    </a>
+
+                    <a href="{% url 'add_to_cart' product.id %}"
+                       class="cart-btn">
+
+                        Add to Cart
+
+                    </a>
+
+                </div>
+
             </div>
+
         </div>
-    {% empty %}
-        <p>No products found.</p>
-    {% endfor %}
-</div>
+
+        {% empty %}
+
+        <div class="empty-products">
+
+            <p>
+
+                No products found.
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= HERO SLIDER SCRIPT ================= -->
+
+<script>
+
+    let slides = document.querySelectorAll('.slide');
+
+    let currentSlide = 0;
+
+    function changeSlide() {
+
+        slides[currentSlide].classList.remove('active');
+
+        currentSlide++;
+
+        if (currentSlide >= slides.length) {
+
+            currentSlide = 0;
+
+        }
+
+        slides[currentSlide].classList.add('active');
+
+    }
+
+    setInterval(changeSlide, 3000);
+
+</script>
 
 {% endblock %}

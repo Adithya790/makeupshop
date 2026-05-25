@@ -1,7 +1,7 @@
 
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product, Category
+from .models import Product, Category, CategoryBanner
 from cart.models import Cart
 
 
@@ -28,16 +28,52 @@ def product_detail(request, slug):
 
 
 def category_products(request, slug):
-    category = get_object_or_404(Category, slug=slug)
-    products = Product.objects.filter(category=category, stock__gt=0)
-    categories = Category.objects.all()
+
+    # selected category OR subcategory
+    category = get_object_or_404(
+        Category,
+        slug=slug
+    )
+
+    # navbar categories
+    categories = Category.objects.filter(parent=None)
+
+    # subcategories
+    subcategories = category.subcategories.all()
+
+    # IF MAIN CATEGORY
+    if subcategories.exists():
+
+        products = Product.objects.filter(
+            category__in=subcategories,
+            stock__gt=0
+        )
+
+        # banners for main category
+        banners = CategoryBanner.objects.filter(
+            category=category
+        )
+
+    # IF SUBCATEGORY
+    else:
+
+        products = Product.objects.filter(
+            category=category,
+            stock__gt=0
+        )
+
+        # use parent category banners
+        banners = CategoryBanner.objects.filter(
+            category=category.parent
+        )
 
     return render(request, 'products/product_list.html', {
         'products': products,
         'selected_category': category,
-        'categories': categories
+        'categories': categories,
+        'subcategories': subcategories,
+        'banners': banners,
     })
-
 
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)

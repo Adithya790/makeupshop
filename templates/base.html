@@ -3,105 +3,209 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{% block title %}Makeup Store{% endblock %}</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 
 <body>
 
+    <!-- ================= TOP BAR ================= -->
+
     <div class="top-bar">
+
         ✨ Flat 20% Off on All Beauty Products | Free Shipping Above ₹999
+
     </div>
 
 
+    <!-- ================= HEADER ================= -->
+
     <header class="site-header">
+
         <div class="container">
+
             <div class="nav-bar">
 
-                
+                <!-- LOGO -->
+
                 <a href="{% url 'product_list' %}" class="logo">
+
                     💄 Makeup<span>Store</span>
+
                 </a>
 
-              
+
+                <!-- NAVBAR -->
+
                 {% include 'includes/navbar.html' %}
 
-        
-                <form method="get" action="{% url 'product_list' %}" class="search-box">
-                    <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}">
-                    <button type="submit">🔍</button>
+
+                <!-- SEARCH BOX -->
+
+                <form method="get"
+                      action="{% url 'product_list' %}"
+                      class="search-box">
+
+                    <input type="text"
+                           name="q"
+                           placeholder="Search products..."
+                           value="{{ request.GET.q }}">
+
+                    <button type="submit">
+
+                        🔍
+
+                    </button>
+
                 </form>
 
+
+                <!-- HEADER ACTIONS -->
+
                 <div class="header-actions">
+
                     <a href="#">Account</a>
-                    <a href="{% url 'wishlist_detail' %}">Wishlist ❤️</a>
-                    <a href="{% url 'cart_detail' %}">Cart</a>
+
+                    <a href="{% url 'wishlist_detail' %}">
+
+                        Wishlist ❤️
+
+                    </a>
+
+                    <a href="{% url 'cart_detail' %}">
+
+                        Cart 🛒
+
+                    </a>
+
                 </div>
 
             </div>
+
         </div>
 
-       <div class="category-navbar">
-    <div class="container">
-        <ul class="category-menu">
-           
-            <li class="all-item">
-                <a href="{% url 'product_list' %}">ALL</a>
-            </li>
 
-            
-            {% for category in categories %}
-            <li class="nav-item">
-                
-                <a href="{% url 'products_by_category' category.slug %}" class="nav-link">
-                    {{ category.name }}
-                </a>
+        <!-- ================= CATEGORY NAVBAR ================= -->
 
-                
-                <!-- <ul class="submenu">
-                    <li>
-                        <a href="{% url 'products_by_category' category.slug %}" class="view-all-sub">
-                            View All {{ category.name }}
+        <div class="category-navbar">
+
+            <div class="container">
+
+                <ul class="category-menu">
+
+                    <!-- ALL CATEGORY -->
+
+                    <li class="all-item">
+
+                        <a href="{% url 'product_list' %}">
+
+                            ALL
+
                         </a>
-                    </li> -->
-                    
-                    <!-- {% for sub in category.subcategories.all %}
-                    <li>
-                        <a href="{% url 'products_by_category' sub.slug %}">
-                            {{ sub.name }}
-                        </a>
+
                     </li>
-                    {% empty %}
-                    <li class="no-sub">No subcategories</li>
+
+
+                    <!-- CATEGORY LOOP -->
+
+                    {% for category in categories %}
+
+                    <li class="nav-item">
+
+                        <!-- CATEGORY LINK -->
+
+                        <a href="{% url 'products_by_category' category.slug %}"
+                           class="nav-link">
+
+                            {{ category.name }}
+
+                        </a>
+
+
+                        <!-- SUBCATEGORY DROPDOWN -->
+
+                        <!-- {% if selected_category == category and subcategories %}
+
+                        <div class="subcategory-menu">
+
+                            {% for sub in subcategories %}
+
+                            <a href="{% url 'products_by_category' sub.slug %}"
+                               class="subcategory-item"> -->
+
+                                <!-- SUBCATEGORY IMAGE -->
+<!-- 
+                                {% if sub.image %}
+
+                                <img src="{{ sub.image.url }}"
+                                     alt="{{ sub.name }}"
+                                     class="subcategory-img">
+
+                                {% endif %} -->
+
+                                <!-- SUBCATEGORY NAME -->
+
+                                <!-- <span>
+
+                                    {{ sub.name }}
+
+                                </span> -->
+
+                            <!-- </a>
+
+                            {% endfor %}
+
+                        </div>
+
+                        {% endif %} -->
+
+                    </li>
+
                     {% endfor %}
-                </ul> -->
-             </li>
-            {% empty %}
-            <li>No categories found.</li>
-            {% endfor %} 
-        </ul>
-    </div>
-</div>
+
+                </ul>
+
+            </div>
+
+        </div>
+
     </header>
 
-   
+
+    <!-- ================= MAIN CONTENT ================= -->
+
     <main class="container main-content">
+
         {% block content %}
+
         {% endblock %}
+
     </main>
 
-    
+
+    <!-- ================= FOOTER ================= -->
+
     <footer class="site-footer">
+
         <div class="container">
-            <p>&copy; 2026 Makeup Store. All rights reserved.</p>
+
+            <p>
+
+                &copy; 2026 Makeup Store. All rights reserved.
+
+            </p>
+
         </div>
+
     </footer>
 
-   
-
 </body>
+
 </html>

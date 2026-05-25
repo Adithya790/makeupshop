@@ -2,6 +2,9 @@
 
 from django.contrib import admin
 from .models import Category, Product
+from .models import CategoryBanner
+
+admin.site.register(CategoryBanner)
 
 
 @admin.register(Category)
