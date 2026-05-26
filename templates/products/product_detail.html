@@ -10,42 +10,98 @@
 
     <div class="product-detail-card">
 
+        <!-- PRODUCT IMAGE -->
+
         <div class="detail-image">
+
             <img src="{{ product.image.url }}"
                  alt="{{ product.name }}">
+
         </div>
+
+
+        <!-- PRODUCT INFO -->
 
         <div class="detail-info">
 
-            <p class="brand">{{ product.brand }}</p>
+            <!-- BRAND -->
 
-            <h1>{{ product.name }}</h1>
+            <p class="brand">
+
+                {{ product.brand }}
+
+            </p>
+
+
+            <!-- PRODUCT NAME -->
+
+            <h1>
+
+                {{ product.name }}
+
+            </h1>
+
+
+            <!-- PRICE -->
 
             <p class="detail-price">
+
                 ₹{{ product.price }}
+
             </p>
+
+
+            <!-- DESCRIPTION -->
 
             <p class="description">
+
                 {{ product.description }}
+
             </p>
 
-            <p>
+
+            <!-- STOCK -->
+
+            <p class="stock-text">
+
                 <strong>Stock:</strong>
+
                 {{ product.stock }}
+
             </p>
+
+
+            <!-- BUTTONS -->
 
             <div class="action-buttons">
 
-                <a href="{% url 'add_to_cart' product.id %}" class="add-cart-btn">
-    Add to Cart
-</a>
-  <a href="{% url 'add_to_wishlist' product.id %}" class="add-cart-btn">
-    ❤️ Wishlist
-</a>
+                <!-- ADD TO CART -->
+
+                <a href="{% url 'add_to_cart' product.id %}"
+                   class="detail-cart-btn">
+
+                   Add to Cart
+
+                </a>
+
+
+                <!-- WISHLIST -->
+
+                <a href="{% url 'add_to_wishlist' product.id %}"
+                   class="detail-wishlist-btn">
+
+                   ❤️ Wishlist
+
+                </a>
+
+
+                <!-- BACK -->
 
                 <a href="/"
-                   class="btn-outline">
-                    Back to Shop
+                   class="detail-back-btn">
+
+                   Back to Shop
+
                 </a>
 
             </div>

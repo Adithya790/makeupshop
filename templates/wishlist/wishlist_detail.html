@@ -1,39 +1,125 @@
 {% extends 'base.html' %}
 
+{% block title %}
+Wishlist | Pink Beauty
+{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <h2>❤️ My Wishlist</h2>
+
+<section class="wishlist-section container">
+
+    <!-- TITLE -->
+
+    <div class="wishlist-header">
+
+        <h1>❤️ My Wishlist</h1>
+
+        <p>
+            Your favorite beauty essentials saved here
+        </p>
+
+    </div>
+
 
     {% if wishlist_items %}
+
+    <div class="wishlist-grid">
+
         {% for item in wishlist_items %}
-            <div class="card p-3 mb-3">
-                <h4>{{ item.product.name }}</h4>
-                <p>Brand: {{ item.product.brand }}</p>
-                <p>Price: ₹{{ item.product.price }}</p>
+
+        <div class="wishlist-card">
+
+            <!-- IMAGE -->
+
+            <a href="{% url 'product_detail' item.product.slug %}">
 
                 {% if item.product.image %}
-                    <img src="{{ item.product.image.url }}" width="150">
+
+                <img src="{{ item.product.image.url }}"
+                     alt="{{ item.product.name }}">
+
                 {% endif %}
 
-                <br><br>
+            </a>
 
-               <div class="wishlist-actions">
 
-    <a href="{% url 'add_to_cart' item.product.id %}"
-       class="wishlist-btn cart-btn">
-        Add to Cart
-    </a>
+            <!-- PRODUCT INFO -->
 
-    <a href="{% url 'remove_from_wishlist' item.product.id %}"
-       class="wishlist-btn remove-btn">
-        Remove
-    </a>
+            <div class="wishlist-info">
 
-</div>
+                <p class="wishlist-brand">
+
+                    {{ item.product.brand }}
+
+                </p>
+
+                <h3>
+
+                    <a href="{% url 'product_detail' item.product.slug %}">
+
+                        {{ item.product.name }}
+
+                    </a>
+
+                </h3>
+
+                <p class="wishlist-price">
+
+                    ₹{{ item.product.price }}
+
+                </p>
+
+
+                <!-- BUTTONS -->
+
+                <div class="wishlist-actions">
+
+                    <a href="{% url 'add_to_cart' item.product.id %}"
+                       class="wishlist-btn cart-btn">
+
+                        Add to Cart
+
+                    </a>
+
+                    <a href="{% url 'remove_from_wishlist' item.product.id %}"
+                       class="wishlist-btn remove-btn">
+
+                        Remove
+
+                    </a>
+
+                </div>
+
             </div>
+
+        </div>
+
         {% endfor %}
+
+    </div>
+
     {% else %}
-        <p>Your wishlist is empty.</p>
+
+    <!-- EMPTY -->
+
+    <div class="empty-wishlist">
+
+        <h2>Your Wishlist is Empty 💔</h2>
+
+        <p>
+            Add products you love and shop later.
+        </p>
+
+        <a href="/" class="continue-btn">
+
+            Continue Shopping
+
+        </a>
+
+    </div>
+
     {% endif %}
-</div>
+
+</section>
+
 {% endblock %}
