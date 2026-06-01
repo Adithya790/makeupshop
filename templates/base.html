@@ -47,7 +47,6 @@
 
                 <!-- NAVBAR -->
 
-                {% include 'includes/navbar.html' %}
 
 
                 <!-- SEARCH BOX -->
@@ -68,6 +67,17 @@
                 <!-- HEADER ACTIONS -->
 
                 <div class="header-actions">
+                     <form method="get" action="{% url 'product_list' %}" class="search-box">
+
+                    <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}">
+
+                    <button type="submit">
+
+                        🔍
+
+                    </button>
+
+                </form>
 
                     {% if user.is_authenticated %}
 
@@ -81,20 +91,20 @@
 
                     <a href="{% url 'login' %}">
 
-                        Login
+                        👤
 
                     </a>
 
                     {% endif %}
                     <a href="{% url 'wishlist_detail' %}">
 
-                        Wishlist ❤️
+                        ❤️
 
                     </a>
 
                     <a href="{% url 'cart_detail' %}">
 
-                        Cart 🛒
+                         🛒
 
                     </a>
 

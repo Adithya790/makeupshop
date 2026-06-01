@@ -42,6 +42,7 @@ urlpatterns = [
     path('cart/', include('cart.urls')),
 
     # Home
+    path('orders/', include('orders.urls')),
 
     path('', views.product_list, name='home'),
 

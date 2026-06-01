@@ -10,126 +10,129 @@
     <h2 class="mb-4 fw-bold">🛒 Your Cart</h2>
 
     {% if cart_items %}
-        <div class="cart-wrapper">
-            {% for item in cart_items %}
-            <div class="cart-item-card">
+    <div class="cart-wrapper">
+        {% for item in cart_items %}
+        <div class="cart-item-card">
 
-                <!-- Product Image -->
-                <div class="cart-image">
-                    {% if item.product.image %}
-                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                    {% endif %}
-                </div>
-
-                <!-- Product Details -->
-                <div class="cart-info">
-                    <h4>{{ item.product.name }}</h4>
-                    <p><strong>Price:</strong> ₹{{ item.product.price }}</p>
-                    <p><strong>Quantity:</strong> {{ item.quantity }}</p>
-                    <p><strong>Subtotal:</strong> ₹{{ item.subtotal }}</p>
-
-                    <!-- Remove Button -->
-                    <a href="{% url 'remove_from_cart' item.product.id %}"
-                       class="remove-btn">
-                        Remove
-                    </a>
-                </div>
+            <!-- Product Image -->
+            <div class="cart-image">
+                {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                {% endif %}
             </div>
-            {% endfor %}
 
-            <!-- Total Section -->
-            <div class="cart-total-box">
-                <h3>Total: ₹{{ total }}</h3>
+            <!-- Product Details -->
+            <div class="cart-info">
+                <h4>{{ item.product.name }}</h4>
+                <p><strong>Price:</strong> ₹{{ item.product.price }}</p>
+                <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                <p><strong>Subtotal:</strong> ₹{{ item.subtotal }}</p>
 
-                <a href="{% url 'product_list' %}" class="continue-btn">
-                    Continue Shopping
+                <!-- Remove Button -->
+                <a href="{% url 'remove_from_cart' item.product.id %}" class="remove-btn">
+                    Remove
                 </a>
             </div>
         </div>
-    {% else %}
-        <div class="empty-cart">
-            <h4>Your cart is empty.</h4>
+        {% endfor %}
+
+        <!-- Total Section -->
+        <div class="cart-total-box">
+            <h3>Total: ₹{{ total }}</h3>
+
+            <a href="{% url 'checkout' %}" class="btn-checkout">
+                Proceed to Payment
+            </a>
 
             <a href="{% url 'product_list' %}" class="continue-btn">
-                Start Shopping
+                Continue Shopping
             </a>
         </div>
+    </div>
+    {% else %}
+    <div class="empty-cart">
+        <h4>Your cart is empty.</h4>
+
+        <a href="{% url 'product_list' %}" class="continue-btn">
+            Start Shopping
+        </a>
+    </div>
     {% endif %}
 </div>
 
 <style>
-.cart-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+    .cart-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
 
-.cart-item-card {
-    display: flex;
-    gap: 20px;
-    background: #fff;
-    border: 1px solid #eee;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
+    .cart-item-card {
+        display: flex;
+        gap: 20px;
+        background: #fff;
+        border: 1px solid #eee;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
 
-.cart-image img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
+    .cart-image img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
 
-.cart-info {
-    flex: 1;
-}
+    .cart-info {
+        flex: 1;
+    }
 
-.cart-info h4 {
-    margin-bottom: 10px;
-}
+    .cart-info h4 {
+        margin-bottom: 10px;
+    }
 
-.remove-btn {
-    display: inline-block;
-    margin-top: 10px;
-    background: #dc3545;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-}
+    .remove-btn {
+        display: inline-block;
+        margin-top: 10px;
+        background: #dc3545;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+    }
 
-.remove-btn:hover {
-    background: #bb2d3b;
-    color: white;
-}
+    .remove-btn:hover {
+        background: #bb2d3b;
+        color: white;
+    }
 
-.cart-total-box {
-    background: #fff5f8;
-    padding: 20px;
-    border-radius: 12px;
-    text-align: right;
-}
+    .cart-total-box {
+        background: #fff5f8;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: right;
+    }
 
-.continue-btn {
-    display: inline-block;
-    margin-top: 10px;
-    background: #e91e63;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 6px;
-    text-decoration: none;
-}
+    .continue-btn {
+        display: inline-block;
+        margin-top: 10px;
+        background: #e91e63;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+    }
 
-.continue-btn:hover {
-    background: #c2185b;
-    color: white;
-}
+    .continue-btn:hover {
+        background: #c2185b;
+        color: white;
+    }
 
-.empty-cart {
-    text-align: center;
-    padding: 50px;
-}
+    .empty-cart {
+        text-align: center;
+        padding: 50px;
+    }
 </style>
 {% endblock %}

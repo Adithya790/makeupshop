@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="payment-wrapper">
+
+    <div class="payment-card">
+
+        <h1>💳 Payment</h1>
+
+        <p class="payment-subtitle">
+            Choose a payment method to complete your order
+        </p>
+
+        <div class="payment-option">
+
+            <div class="payment-icon">
+                UPI
+            </div>
+
+            <div class="payment-text">
+                <h3>UPI Payment</h3>
+                <p>Pay using any UPI app</p>
+            </div>
+
+            <div class="arrow">›</div>
+
+        </div>
+
+        <div class="payment-option">
+
+            <div class="payment-icon">
+                💳
+            </div>
+
+            <div class="payment-text">
+                <h3>Credit / Debit Card</h3>
+                <p>Pay using Visa, Mastercard, Rupay etc.</p>
+            </div>
+
+            <div class="arrow">›</div>
+
+        </div>
+
+        <div class="payment-option">
+
+            <div class="payment-icon">
+                🚚
+            </div>
+
+            <div class="payment-text">
+                <h3>Cash on Delivery</h3>
+                <p>Pay when you receive your order</p>
+            </div>
+
+            <div class="arrow">›</div>
+
+        </div>
+
+    </div>
+
+    <div class="secure-payment">
+        🔒 100% Secure Payments
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,21 +1,4 @@
-# from django.shortcuts import render, redirect, get_object_or_404
-# from .models import Cart
 
-# def cart(request):
-#     cart_items = Cart.objects.all()
-#     return render(request, 'cart/cart.html', {'cart_items': cart_items})
-
-
-# def remove_from_cart(request, cart_id):
-#     item = get_object_or_404(Cart, id=cart_id)
-#     item.delete()
-#     return redirect('cart')
-# def add_to_cart(request, product_id):
-#     # your logic here
-#     return redirect('cart_view')
-# cart/views.py
-
-# cart/views.py
 
 from django.shortcuts import render, redirect
 from .models import Cart
