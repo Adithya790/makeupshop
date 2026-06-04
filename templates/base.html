@@ -45,23 +45,11 @@
                 </a>
 
 
-                <!-- NAVBAR -->
+             
 
 
 
-                <!-- SEARCH BOX -->
-
-                <form method="get" action="{% url 'product_list' %}" class="search-box">
-
-                    <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}">
-
-                    <button type="submit">
-
-                        🔍
-
-                    </button>
-
-                </form>
+      
 
 
                 <!-- HEADER ACTIONS -->
@@ -149,45 +137,6 @@
                             {{ category.name }}
 
                         </a>
-
-
-                        <!-- SUBCATEGORY DROPDOWN -->
-
-                        <!-- {% if selected_category == category and subcategories %}
-
-                        <div class="subcategory-menu">
-
-                            {% for sub in subcategories %}
-
-                            <a href="{% url 'products_by_category' sub.slug %}"
-                               class="subcategory-item"> -->
-
-                        <!-- SUBCATEGORY IMAGE -->
-                        <!-- 
-                                {% if sub.image %}
-
-                                <img src="{{ sub.image.url }}"
-                                     alt="{{ sub.name }}"
-                                     class="subcategory-img">
-
-                                {% endif %} -->
-
-                        <!-- SUBCATEGORY NAME -->
-
-                        <!-- <span>
-
-                                    {{ sub.name }}
-
-                                </span> -->
-
-                        <!-- </a>
-
-                            {% endfor %}
-
-                        </div>
-
-                        {% endif %} -->
-
                     </li>
 
                     {% endfor %}
@@ -202,14 +151,14 @@
 
 
     <!-- ================= MAIN CONTENT ================= -->
-
+ 
     <main class="container main-content">
 
         {% block content %}
 
         {% endblock %}
 
-    </main>
+    </main> 
 
 
     <!-- ================= FOOTER ================= -->

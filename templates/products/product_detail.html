@@ -6,102 +6,51 @@
 
 {% block content %}
 
+<!-- =========================
+PRODUCT DETAILS SECTION
+========================= -->
+
 <section class="container">
 
     <div class="product-detail-card">
 
         <!-- PRODUCT IMAGE -->
-
         <div class="detail-image">
-
-            <img src="{{ product.image.url }}"
-                 alt="{{ product.name }}">
-
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
         </div>
 
-
         <!-- PRODUCT INFO -->
-
         <div class="detail-info">
 
-            <!-- BRAND -->
+            <p class="brand">{{ product.brand }}</p>
 
-            <p class="brand">
+            <h1>{{ product.name }}</h1>
 
-                {{ product.brand }}
+            <p class="detail-price">₹{{ product.price }}</p>
 
-            </p>
-
-
-            <!-- PRODUCT NAME -->
-
-            <h1>
-
-                {{ product.name }}
-
-            </h1>
-
-
-            <!-- PRICE -->
-
-            <p class="detail-price">
-
-                ₹{{ product.price }}
-
-            </p>
-
-
-            <!-- DESCRIPTION -->
-
-            <p class="description">
-
-                {{ product.description }}
-
-            </p>
-
-
-            <!-- STOCK -->
+            <p class="description">{{ product.description }}</p>
 
             <p class="stock-text">
-
-                <strong>Stock:</strong>
-
-                {{ product.stock }}
-
+                <strong>Stock:</strong> {{ product.stock }}
             </p>
 
-
-            <!-- BUTTONS -->
-
+            <!-- ACTION BUTTONS -->
             <div class="action-buttons">
 
-                <!-- ADD TO CART -->
-
-                <a href="{% url 'add_to_cart' product.id %}"
-                   class="detail-cart-btn">
-
-                   Add to Cart
-
+                <a href="{% url 'add_to_cart' product.id %}" class="detail-cart-btn">
+                    Add to Cart
                 </a>
 
-
-                <!-- WISHLIST -->
-
-                <a href="{% url 'add_to_wishlist' product.id %}"
-                   class="detail-wishlist-btn">
-
-                   ❤️ Wishlist
-
+                <a href="{% url 'checkout' %}" class="checkout-btn">
+                    ⚡ Buy Now
                 </a>
 
+                <a href="{% url 'add_to_wishlist' product.id %}" class="detail-wishlist-btn">
+                    ❤️ Wishlist
+                </a>
 
-                <!-- BACK -->
-
-                <a href="/"
-                   class="detail-back-btn">
-
-                   Back to Shop
-
+                <a href="/" class="detail-back-btn">
+                    Back to Shop
                 </a>
 
             </div>
@@ -109,6 +58,88 @@
         </div>
 
     </div>
+
+</section>
+
+
+<!-- =========================
+REVIEWS SECTION
+========================= -->
+
+<section class="review-section">
+
+    <h2>⭐ Customer Reviews</h2>
+
+    <!-- AVERAGE RATING -->
+    <div class="rating-summary">
+        <span class="rating-number">
+            {{ avg_rating }}/5
+        </span>
+    </div>
+
+    <!-- REVIEW FORM -->
+    {% if user.is_authenticated %}
+
+    <form method="POST" action="{% url 'add_review' product.id %}" class="review-form">
+
+        {% csrf_token %}
+
+        <select name="rating" required>
+            <option value="">Select Rating</option>
+            <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+            <option value="4">⭐⭐⭐⭐ Good</option>
+            <option value="3">⭐⭐⭐ Average</option>
+            <option value="2">⭐⭐ Poor</option>
+            <option value="1">⭐ Bad</option>
+        </select>
+
+        <textarea name="comment" rows="4" placeholder="Write your review..." required></textarea>
+
+        <button type="submit">Submit Review</button>
+
+    </form>
+
+    {% else %}
+
+    <p>Please login to write a review.</p>
+
+    {% endif %}
+
+
+    <!-- REVIEWS LIST -->
+    {% for review in reviews %}
+
+    <div class="review-card">
+
+        <div class="review-header">
+
+            <h4>{{ review.user.username }}</h4>
+
+            <span class="review-stars">
+
+                {% for i in "12345"|make_list %}
+                    {% if forloop.counter <= review.rating %}
+                        ⭐
+                    {% endif %}
+                {% endfor %}
+
+            </span>
+
+        </div>
+
+        <p>{{ review.comment }}</p>
+
+        <small>{{ review.created_at|date:"d M Y" }}</small>
+
+    </div>
+
+    {% empty %}
+
+    <div class="no-reviews">
+        No reviews yet. Be the first to review this product.
+    </div>
+
+    {% endfor %}
 
 </section>
 

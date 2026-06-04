@@ -6,60 +6,6 @@
 {% block title %}Your Cart{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="mb-4 fw-bold">🛒 Your Cart</h2>
-
-    {% if cart_items %}
-    <div class="cart-wrapper">
-        {% for item in cart_items %}
-        <div class="cart-item-card">
-
-            <!-- Product Image -->
-            <div class="cart-image">
-                {% if item.product.image %}
-                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                {% endif %}
-            </div>
-
-            <!-- Product Details -->
-            <div class="cart-info">
-                <h4>{{ item.product.name }}</h4>
-                <p><strong>Price:</strong> ₹{{ item.product.price }}</p>
-                <p><strong>Quantity:</strong> {{ item.quantity }}</p>
-                <p><strong>Subtotal:</strong> ₹{{ item.subtotal }}</p>
-
-                <!-- Remove Button -->
-                <a href="{% url 'remove_from_cart' item.product.id %}" class="remove-btn">
-                    Remove
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-
-        <!-- Total Section -->
-        <div class="cart-total-box">
-            <h3>Total: ₹{{ total }}</h3>
-
-            <a href="{% url 'checkout' %}" class="btn-checkout">
-                Proceed to Payment
-            </a>
-
-            <a href="{% url 'product_list' %}" class="continue-btn">
-                Continue Shopping
-            </a>
-        </div>
-    </div>
-    {% else %}
-    <div class="empty-cart">
-        <h4>Your cart is empty.</h4>
-
-        <a href="{% url 'product_list' %}" class="continue-btn">
-            Start Shopping
-        </a>
-    </div>
-    {% endif %}
-</div>
-
 <style>
     .cart-wrapper {
         display: flex;
@@ -115,7 +61,7 @@
         text-align: right;
     }
 
-    .continue-btn {
+    .continue-btn,.btn-checkout {
         display: inline-block;
         margin-top: 10px;
         background: #e91e63;
@@ -125,14 +71,66 @@
         text-decoration: none;
     }
 
-    .continue-btn:hover {
-        background: #c2185b;
-        color: white;
-    }
+  
 
     .empty-cart {
         text-align: center;
         padding: 50px;
     }
 </style>
+<div class="container mt-5">
+    <h2 class="mb-4 fw-bold">🛒 Your Cart</h2>
+
+    {% if cart_items %}
+    <div class="cart-wrapper">
+        {% for item in cart_items %}
+        <div class="cart-item-card">
+
+            <!-- Product Image -->
+            <div class="cart-image">
+                {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                {% endif %}
+            </div>
+
+            <!-- Product Details -->
+            <div class="cart-info">
+                <h4>{{ item.product.name }}</h4>
+                <p><strong>Price:</strong> ₹{{ item.product.price }}</p>
+                <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                <p><strong>Subtotal:</strong> ₹{{ item.subtotal }}</p>
+
+                <!-- Remove Button -->
+                <a href="{% url 'remove_from_cart' item.product.id %}" class="remove-btn">
+                    Remove
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Total Section -->
+        <div class="cart-total-box">
+            <h3>Total: ₹{{ total }}</h3>
+
+            <a href="{% url 'checkout' %}" class="btn-checkout">
+                checkout
+            </a>
+
+            <a href="{% url 'product_list' %}" class="continue-btn">
+                Continue Shopping
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-cart">
+        <h4>Your cart is empty.</h4>
+
+        <a href="{% url 'product_list' %}" class="continue-btn">
+            Start Shopping
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+
 {% endblock %}

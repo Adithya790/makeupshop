@@ -12,7 +12,8 @@
             Choose a payment method to complete your order
         </p>
 
-        <div class="payment-option">
+        <!-- UPI -->
+        <div class="payment-option" onclick="payNow()">
 
             <div class="payment-icon">
                 UPI
@@ -27,7 +28,8 @@
 
         </div>
 
-        <div class="payment-option">
+        <!-- CARD -->
+        <div class="payment-option" onclick="payNow()">
 
             <div class="payment-icon">
                 💳
@@ -42,20 +44,25 @@
 
         </div>
 
-        <div class="payment-option">
+        <!-- COD -->
+        <a href="{% url 'cod' %}" style="text-decoration:none;color:inherit;">
 
-            <div class="payment-icon">
-                🚚
+            <div class="payment-option">
+
+                <div class="payment-icon">
+                    🚚
+                </div>
+
+                <div class="payment-text">
+                    <h3>Cash on Delivery</h3>
+                    <p>Pay when you receive your order</p>
+                </div>
+
+                <div class="arrow">›</div>
+
             </div>
 
-            <div class="payment-text">
-                <h3>Cash on Delivery</h3>
-                <p>Pay when you receive your order</p>
-            </div>
-
-            <div class="arrow">›</div>
-
-        </div>
+        </a>
 
     </div>
 
@@ -64,5 +71,43 @@
     </div>
 
 </div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+function payNow(){
+
+    var options = {
+
+        "key": "{{ razorpay_key }}",
+
+        "amount": "{{ amount }}",
+
+        "currency": "INR",
+
+        "name": "Makeup Store",
+
+        "description": "Order Payment",
+
+        "order_id": "{{ order_id }}",
+
+        "handler": function (response){
+
+            window.location.href = "{% url 'payment_success' %}";
+        },
+
+        "theme": {
+            "color": "#ff4d6d"
+        }
+
+    };
+
+    var rzp = new Razorpay(options);
+
+    rzp.open();
+}
+
+</script>
 
 {% endblock %}
