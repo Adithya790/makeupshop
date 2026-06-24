@@ -13,7 +13,6 @@ def login_view(request):
 
         user = None
 
-        # LOGIN WITH USERNAME
 
         if User.objects.filter(username=login_input).exists():
 
@@ -27,8 +26,6 @@ def login_view(request):
                 password=password
             )
 
-        # LOGIN WITH EMAIL
-
         elif User.objects.filter(email=login_input).exists():
 
             username = User.objects.get(
@@ -41,7 +38,6 @@ def login_view(request):
                 password=password
             )
 
-        # LOGIN SUCCESS
 
         if user is not None:
 
@@ -76,8 +72,6 @@ def create_account_view(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
-        # PASSWORD CHECK
-
         if password != confirm_password:
 
             messages.error(
@@ -86,8 +80,6 @@ def create_account_view(request):
             )
 
             return redirect('create_account')
-
-        # USERNAME EXISTS
 
         if User.objects.filter(username=username).exists():
 
@@ -98,8 +90,6 @@ def create_account_view(request):
 
             return redirect('create_account')
 
-        # EMAIL EXISTS
-
         if User.objects.filter(email=email).exists():
 
             messages.error(
@@ -108,8 +98,6 @@ def create_account_view(request):
             )
 
             return redirect('create_account')
-
-        # CREATE USER
 
         user = User.objects.create_user(
             username=username,
